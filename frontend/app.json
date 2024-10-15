@@ -1,0 +1,50 @@
+{
+  "expo": {
+    "name": "PlotLine",
+    "slug": "plotline",
+    "version": "1.0.0",
+    "orientation": "portrait",
+    "icon": "./assets/images/icon.png",
+    "scheme": "myapp",
+    "userInterfaceStyle": "automatic",
+    "splash": {
+      "image": "./assets/images/splash.png",
+      "resizeMode": "contain",
+      "backgroundColor": "#ffffff"
+    },
+    "ios": {
+      "supportsTablet": true,
+      "bundleIdentifier": "com.aimez.plotline"
+    },
+    "android": {
+      "adaptiveIcon": {
+        "foregroundImage": "./assets/images/adaptive-icon.png",
+        "backgroundColor": "#ffffff"
+      },
+      "package": "com.aimez.plotline"
+    },
+    "web": {
+      "bundler": "metro",
+      "output": "static",
+      "favicon": "./assets/images/favicon.png"
+    },
+    "plugins": [
+      "expo-router"
+    ],
+    "experiments": {
+      "typedRoutes": true
+    },
+    "extra": {
+      "eas": {
+        "projectId": "35ec1464-67d5-4e16-859a-274259475c69"
+      }
+    },
+    "owner": "aim-ez",
+    "updates": {
+      "url": "https://u.expo.dev/35ec1464-67d5-4e16-859a-274259475c69"
+    },
+    "runtimeVersion": {
+      "policy": "appVersion"
+    }
+  }
+}
