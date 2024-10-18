@@ -1,24 +1,14 @@
-# do this before main so that you know what
-# kinds of data operations you'll be doing 
-# before building main functions
+from flask_sqlalchemy import SQLAlchemy
+from uuid import uuid4
 
-from config import db
+db = SQLAlchemy()
 
-class Contact(db.Model):
-    id = db.Column(db.Integer, primary_key=True)
-    first_name = db.Column(db.String(80), unique=False, nullable=False)
-    last_name = db.Column(db.String(80), unique=False, nullable=False)
-    email = db.Column(db.String(120), unique=True, nullable=False)
+def get_uuid():
+    return uuid4().hex
 
 
-    # function that takes our fields above and convert into
-    # python dictionary which can then be converted into 
-    # JSON (JavaScript Object Notation) which is something 
-    # we can pass to/from our API
-    def to_json(self):
-        return {
-            "id": self.id, # camelCase for JSON, snake_case for python
-            "firstName": self.first_name,
-            "lastName": self.last_name,
-            "email": self.email,
-        }
+class User(db.Model):
+    __tablename__ = "users"
+    id = db.Column(db.String(32), primary_key=True, unique=True, default=get_uuid)
+    email = db.Column(db.String(345), unique=True)
+    password = db.Column(db.Text, nullable=False)

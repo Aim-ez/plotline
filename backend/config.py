@@ -1,12 +1,17 @@
-from flask import Flask
-from flask_sqlalchemy import SQLAlchemy
-from flask_cors import CORS
+from dotenv import load_dotenv
+import os
+import redis 
 
-app = Flask(__name__)
-CORS(app) # disables CORS error
+load_dotenv()
 
-# specify location of local sqlite3 databse
-app.config["SQLALCHEMY_DATABASE_URI"] = "sqlite:///mydatabase.db"
-app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = False # doesn't track modif to db
+class ApplicationConfig:
+    SECRET_KEY = os.environ["SECRET_KEY"]
 
-db = SQLAlchemy(app)
+    SQLALCHEMY_TRACK_MODIFICATIONS = False
+    SQLALCHEMY_ECHO = True
+    SQLALCHEMY_DATABASE_URI = r"sqlite:///./db.sqlite"
+
+    SESSION_TYPE = "redis"
+    SESSION_PERMANENT = False
+    SESSION_USER_SIGNER = True
+    SESSION_REDIS = redis.from_url("redis://127.0.0.1:6379")

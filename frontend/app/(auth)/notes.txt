@@ -1,0 +1,7 @@
+after logging in -> server sets cooked called "session_id"
+
+everytime client makes request -> server recieves session_id
+
+server will check for any session which refers to the session_id
+
+if there is a session with that ID, you are authenticated

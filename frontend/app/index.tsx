@@ -8,7 +8,7 @@ export default function App() {
     <View style={styles.container}>
       <Text>Welcome to PlotLine!</Text>
       <StatusBar style="auto"/>
-      <Link href="/home" style={{color: 'blue'}}>Go to Home</Link>
+      <Link href="/sign-in" style={{color: 'blue'}}>Get Started</Link>
     </View>
   );
 }
