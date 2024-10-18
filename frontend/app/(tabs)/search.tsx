@@ -13,6 +13,7 @@
 
 // const styles = StyleSheet.create({})
 
+//figuring out commits
 import { StyleSheet, Text, TextInput, View, FlatList, TouchableOpacity } from 'react-native'
 import React, { useState } from 'react'
 
@@ -122,7 +123,7 @@ const styles = StyleSheet.create({
     color: '#666',
   },
 })
-
+//
 
 
 
