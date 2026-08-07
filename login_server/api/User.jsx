@@ -959,6 +959,44 @@ router.post('/removeCurrentlyReading', async (req, res) => {
     }
 });
 
+// Fetch user's currently reading list
+router.get('/getCurrentlyReading', async (req, res) => {
+    const { userId } = req.query;
+
+    if (!userId) {
+        return res.status(400).json({ status: 'FAILED', message: 'Missing userId parameter.' });
+    }
+
+    try {
+        const currentlyReading = await CurrentlyReading.findOne({ userId }).populate('books.book');
+
+        if (!currentlyReading || currentlyReading.books.length === 0) {
+            return res.status(404).json({ status: 'SUCCESS', message: 'No books in the currently reading list.', data: { books: [] } });
+        }
+
+        res.status(200).json({
+            status: 'SUCCESS',
+            message: 'Currently reading list retrieved successfully.',
+            data: {
+                books: currentlyReading.books.map((entry) => ({
+                    book: {
+                        _id: entry.book._id,
+                        title: entry.book.title,
+                        author: entry.book.author,
+                        coverLink: entry.book.coverLink,
+                        description: entry.book.description,
+                    },
+                    status: entry.status,
+                })),
+            },
+        });
+    } catch (error) {
+
+        console.error(error);
+        res.status(500).json({ status: 'FAILED', message: 'Server error.' });
+    }
+});
+
 
 router.get('/recommendations', async (req, res) => {
     const { userId, selectedLanguage, sortOrder, resultsPerPage = 30 } = req.query;

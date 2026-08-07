@@ -1,16 +1,24 @@
 # plot-line
 
-### Version 1.0.1
-Last 'released' version is 1.0.1 ('Updated Version 1'), which includes the followning updates based on customer feedback:
+### Version 2.0.0 - Release Date: December 6th, 2024
+Current released version is 2.0.0, which includes the following updates:
 
-1) Scroll view on Welcome screen to accomdate smaller devices
-2) Non-case-sensitive emails and usernames
-3) Form submission when hitting 'enter'
-4) Larger search results area
-5) More book results per search
-6) Larger buttons on profile screen
-7) Make '+' button say 'can't find what you're looking for'
-8) Fix auto-resizing input boxes
-9) Fix error when adding adding a new book's publication date
-10) Reduce the number of genres to filter by
-11) Other small UI touch-ups
+#### Create your user profile!
+You can now add the following to your public profile:
+        -Your favourite book
+        -An 'About Me' section
+        -Your 'Currently Reading' list, complete with options for where you are in each book!
+
+Don't want others to see your profile? No problem! We've also added the option to switch your account to private. Other users will still be able to read your reviews, but all of the above information will be hidden from view.
+
+#### Add to your reading list!
+Found a book you'd love to read, but already have too many on the go? We've all been there. 
+Now you can save books to your reading list to easily find them later. If later you decide you'll never get around to it, it's easy to remove books from your list, as well. Simply tap the little garbage can icon in the top right corner of the book details.
+
+#### Get personalized recommendations!
+That's right, recommendations are here! Once you have reviewed three books, you'll start to see personalized recommendations based on your reviews and your reading list in your homepage. Tap the refresh button to get additional recommendations!
+
+
+
+
+Happy reading, everyone!
