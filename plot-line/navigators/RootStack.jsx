@@ -17,6 +17,7 @@ import ReviewPlotlineBook from '../app/screens/ReviewPlotlineBook';
 import PlotlineBookReviews from '../app/screens/PlotlineBookReviews';
 import GoogleBookReviews from '../app/screens/GoogleBookReviews';
 import AddManualBook from '../app/screens/addManualBook';
+import OthersProfile from '../app/screens/OthersProfile';
 
 const Stack = createStackNavigator();
 
@@ -40,6 +41,8 @@ const RootStack = () => {
                             <Stack.Screen name="GoogleBookReviews" component={GoogleBookReviews} options={{title: '', headerShown: true}}/>
                             <Stack.Screen name="ReviewGoogleBook" component={ReviewGoogleBook} options={{title: 'Back to Search', headerShown: true}}/>
                             <Stack.Screen name="ReviewPlotlineBook" component={ReviewPlotlineBook} options={{title: '', headerShown: true}}/>
+                            <Stack.Screen name="OthersProfile" component={OthersProfile} options={{title: '', headerShown: true}}/>
+
                             <Stack.Screen 
                                     name="BookDetails" 
                                     component={BookDetails} 

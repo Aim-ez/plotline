@@ -1,5 +1,5 @@
 import styled from "styled-components/native";
-import { View, Text, Image, TouchableOpacity, TextInput} from 'react-native'
+import { View, Text, Image, TouchableOpacity, TextInput, Picker} from 'react-native'
 import Constants from 'expo-constants'
 
 const StatusBarHeight = Constants.statusBarHeight;
@@ -76,10 +76,10 @@ export const PageLogo = styled.Image`
 export const HeaderImage = styled.Image`
     margin-bottom: 20px;
     
-    ${(props) => props.rl && `
+    ${(props) => props.readlist && `
         width: 500px;
-        height: 400px;
-        resize-mode: contain;
+        height: 170px;
+        margin-bottom: 100px;
     `}
 `;
 
@@ -87,6 +87,12 @@ export const BookCoverImage = styled.Image`
     width: 250px;
     height: 350px;
     resize-mode: contain;
+
+    ${(props) => props.readlist && `
+        width: 60px;
+        height: 100px;
+        margin-left: 10px;
+    `}
 `;
 
 export const ScreenImage = styled.Image`
@@ -151,6 +157,10 @@ export const StyledTextInput = styled.TextInput`
     margin-vertical: 3px;
     margin-bottom: 10px;
     color: ${tertiary};
+
+    ${(props) => props.about && `
+        height: 120px;
+    `}
 `;
 
 export const StyledInputLabel = styled.Text`
@@ -197,12 +207,11 @@ export const StyledButton = styled.TouchableOpacity`
         width: 300px;
         `}
 
-    ${(props) => props.google == true && `
-        background-color: ${green};
-        flex-direction: row;
-        justify-content: center;
-        align-items: center;
+    ${(props) => props.about && `
+        width: 90px;
+        margin: 20px;
     `}
+
 `;
 
 export const ButtonText = styled.Text`
@@ -231,6 +240,8 @@ export const ExtraView = styled.View`
         flex-direction: row;
         align-items: center;
         padding: 10px;
+
+        
 `;
 
 export const ExtraText = styled.Text`
@@ -250,6 +261,10 @@ export const ExtraText = styled.Text`
             shadow-offset: {width: 0px; height: 2px;};
             shadow-opacity: 0.2;
             shadow-radius: 5px;
+        `}
+
+        ${(props) => props.readlist && `
+            margin: 0px;
         `}
 `;
 
@@ -313,8 +328,12 @@ export const BookText = styled.Text`
 `;
 
 export const AuthorText = styled.Text`
-        font-size: 14px;
-        color: ${tertiary}
+    font-size: 14px;
+    color: ${tertiary};
+
+    ${(props) => props.italic == true && `
+        font-style: italic;
+    `}
 `
 
 export const ModalContainer = styled.View`
@@ -357,15 +376,121 @@ export const FilterText = styled.Text`
     `} 
 `
 
-export const PlusButton = styled.TouchableOpacity`
-    position: absolute;
-    top: 20;
-    right: 20px;
-    background-color: ${brand};
-    border-radius: 20px;
+export const BookContainer = styled.TouchableOpacity`
+        flex-direction: row;
+        background-color: ${primary};
+        margin-bottom: 12px;
+        border-radius: 8px;
+        overflow: hidden;
+        shadow-color: #000;
+        shadow-offset: {width: 0px; height: 1px;};
+        shadow-opacity: 0.1;
+        shadow-radius: 3px;
+        elevation: 2;
+`
+
+export const BookInfo = styled.View`
+        flex: 1;
+        padding: 8px;
+        justify-content: center;
+`
+
+export const DeleteIcon = styled.TouchableOpacity`
+        position: absolute;
+        top: 8px;
+        right: 8px;
+        background-color: ${primary};
+        border-radius: 12px;
+        padding: 4px;
+        z-index: 1;
+`
+
+export const FlexRowContainer = styled.View`
+        flex-direction: row;
+`
+// New container for the home screen that overrides existing styles
+export const HomeScreenContainer = styled.View`
+  flex: 1;
+  padding-top: ${StatusBarHeight + 10}px;
+  padding-bottom: 0px; /* Prevent extra bottom padding */
+  background-color: ${back};
+  padding-left: 10px;
+  padding-right: 10px;
+`;
+
+// New header style for the home screen
+export const HomeScreenHeader = styled.View`
+  padding: 20px;
+  align-items: center;
+  margin-bottom: 20px;
+`;
+
+// Add a book container that overrides existing margin-bottom to prevent extra space
+export const HomeBookContainer = styled.TouchableOpacity`
+  flex-direction: row;
+  background-color: ${primary};
+  margin-bottom: 0px; /* Ensure no extra bottom margin */
+  padding: 10px;
+  border-radius: 8px;
+  shadow-color: #000;
+  shadow-offset: { width: 0px; height: 1px };
+  shadow-opacity: 0.1;
+  shadow-radius: 3px;
+  elevation: 2;
+`;
+
+// Home book image size for home screen (adjust as needed)
+export const HomeBookCoverImage = styled.Image`
+  width: 100px;
+  height: 150px;
+  resize-mode: contain;
+  margin-right: 10px;
+`;
+
+// Adjust home book info with no extra padding
+export const HomeBookInfo = styled.View`
+  flex: 1;
+  justify-content: center;
+  padding-left: 10px;
+`;
+
+// Home screen title (if needed for home page)
+export const HomePageTitle = styled.Text`
+  font-size: 30px;
+  text-align: center;
+  font-weight: bold;
+  color: ${brand};
+  padding: 10px;
+  margin-bottom: 20px;
+`;
+
+// Button styles for the home screen (if applicable)
+export const HomeButton = styled.TouchableOpacity`
+  padding: 15px;
+  background-color: ${brand};
+  justify-content: center;
+  align-items: center;
+  border-radius: 65px;
+  margin-top: 20px;
+  height: 60px;
+  width: 200px;
+`;
+
+export const HomeButtonText = styled.Text`
+  color: ${primary};
+  font-size: 16px;
+`;
+
+const RefreshButton = styled.TouchableOpacity`
     width: 40px;
     height: 40px;
+    border-radius: 20px;
+    background-color: #007BFF; /* Primary color */
     align-items: center;
     justify-content: center;
-    zIndex: 1;
-`
+    shadow-color: #000;
+    shadow-offset: { width: 0, height: 2 };
+    shadow-opacity: 0.25;
+    shadow-radius: 3.84px;
+    elevation: 5;
+`;

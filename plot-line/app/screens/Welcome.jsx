@@ -22,12 +22,12 @@ const Welcome = ({navigation}) => {
         <ScrollView>
             <StyledContainer welcome={true}>
                     <InnerContainer>
-                        <PageLogo source={require('../../assets/images/PlotLogo.png')}/>
+                        <PageLogo testID="PageLogo" source={require('../../assets/images/PlotLogo.png')}/>
                         <PageTitle welcome={true}>Welcome to PlotLine</PageTitle>
                         <SubTitle>Insert Witty Subtitle</SubTitle>
 
                         <WelcomeContainer>
-                                <ScreenImage source={require('../../assets/images/books.png')}/>
+                                <ScreenImage testID="ScreenImage" source={require('../../assets/images/books.png')}/>
                                 <StyledButton wide={true} onPress={handlePress}>
                                     <ButtonText>Get Started</ButtonText>
                                 </StyledButton>                            

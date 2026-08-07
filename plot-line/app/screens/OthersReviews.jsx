@@ -1,5 +1,4 @@
 import React, {useEffect, useState} from 'react';
-import { StatusBar } from 'expo-status-bar'
 import { FlatList } from 'react-native';
 import axios from 'axios';
 
@@ -13,6 +12,8 @@ import {
     ReviewBox,
     ReviewText,
     ExtraText,
+    StyledButton,
+    ButtonText
 } from '../../components/styles';
 import { formatDate } from '../../hooks/formatDate.js';
 
@@ -76,10 +77,13 @@ function OthersReviews({route, navigation}) {
 
     const numberOfReviews = allReviewData.length;
 
+    const goToProfile = () => {
+        navigation.navigate('OthersProfile', {userId: userId, username: handle})
+    }
+
 
     return (
             <StyledContainer>
-            <StatusBar style="dark"/>
                 <InnerContainer>
                     <PageTitle>@{handle.toLowerCase()}'s Reviews</PageTitle>
                     <Line></Line>
@@ -95,6 +99,9 @@ function OthersReviews({route, navigation}) {
                     ) : (
                         <ExtraText>@{handle} doesn't have any reviews yet!</ExtraText>
                     )}
+                    <StyledButton onPress={() => goToProfile()}>
+                        <ButtonText>See @{handle.toLowerCase()}'s Profile</ButtonText>
+                    </StyledButton>
                 </InnerContainer>
             </StyledContainer>
     );

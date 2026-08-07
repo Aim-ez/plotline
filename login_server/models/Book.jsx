@@ -8,6 +8,7 @@ const BookSchema = new Schema({
     published: Date,
     description: String,
     coverLink: String,
+    genre: { type: String, required: false },
 })
 
 const Book = mongoose.model('Book', BookSchema);

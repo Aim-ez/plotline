@@ -94,7 +94,7 @@ const Login = ({ navigation }) => {
         <ScrollView>
           <InnerContainer>
             <PageLogo source={require('../../assets/images/PlotLogo.png')} />
-            <PageTitle>Login</PageTitle>
+            <PageTitle testID="Header">Login</PageTitle>
             <SubTitle>Login to Your Account</SubTitle>
             <Formik
               initialValues={{ email: '', password: '' }}
@@ -137,12 +137,12 @@ const Login = ({ navigation }) => {
                   />
                   <MsgBox type={messageType}>{message}</MsgBox>
                   {!submitting && (
-                    <StyledButton onPress={handleSubmit}>
+                    <StyledButton testID='login-button' onPress={handleSubmit}>
                       <ButtonText>Login</ButtonText>
                     </StyledButton>
                   )}
                   {submitting && (
-                    <StyledButton disabled={true}>
+                    <StyledButton testID='login-button' disabled={true}>
                       <Ionicons name={'ellipse-outline'} size={30} color={primary} />
                     </StyledButton>
                   )}

@@ -24,7 +24,31 @@ export const createPlotlineBook = async (book) => {
     const published = book.volumeInfo?.publishedDate || 'Unknown publication date';
     const coverLink = book.volumeInfo.imageLinks?.thumbnail || '';
 
-    const bookData = { title: title, isbn, author, description, published, coverLink };
+     let genre = book.volumeInfo?.categories?.[0] || null;
+
+    // If genre is missing, fetch it using the ISBN (or title)
+    if (!genre && isbn) {
+        try {
+            const response = await axios.get(`https://www.googleapis.com/books/v1/volumes`, {
+                params: {
+                    q: `isbn:${isbn}`,
+                    key: process.env.GOOGLE_BOOKS_API_KEY,  // Use your Google Books API key here
+                }
+            });
+            const bookData = response.data.items && response.data.items[0];
+            if (bookData && bookData.volumeInfo && bookData.volumeInfo.categories) {
+                genre = bookData.volumeInfo.categories[0];  // Get the first genre from categories
+            } else {
+                genre = "Unknown";  // Fallback if no genre is found
+            }
+        } catch (error) {
+            console.error("Error fetching from Google Books API:", error);
+            genre = "Unknown";  // Fallback to Unknown if there's an error fetching genre
+        }
+    }
+
+    const bookData = { title, isbn, author, description, published, coverLink, genre };
+  
     const exists = await checkPlotBookExists(bookData);
 
     try {
