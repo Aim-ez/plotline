@@ -2,7 +2,7 @@
 import React, { useState, useEffect } from 'react';
 import { StyleSheet, FlatList, View, Modal, Button } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
-import { useNavigation } from '@react-navigation/native';
+import { useRouter } from 'expo-router';
 import useFetchBooks from '../../hooks/useFetchBooks';  // Import the custom hook
 
 import {
@@ -37,22 +37,22 @@ const Search = ({ navigation }) => {
     query, selectedGenre, selectedLanguage, resultsPerPage, sortOrder
   );
 
-  const nav = useNavigation();
+const router = useRouter();
 
-  useEffect(() => {
+ // useEffect(() => {
     // Reset filters and trigger fetchBooks when tab is pressed
-    const unsubscribe = nav.addListener('tabPress', () => {
-      setQuery('');
-      setSelectedGenre('');
-      setSelectedLanguage('');
-      setSortOrder('');
-      if (query.trim()) { // Only trigger fetchBooks if the query is non-empty
-        fetchBooks(); // EDIT: Added check for non-empty query
-      }
-    });
+   // const unsubscribe = nav.addListener('tabPress', () => {
+     // setQuery('');
+      //setSelectedGenre('');
+      //setSelectedLanguage('');
+      //setSortOrder('');
+      //if (query.trim()) { // Only trigger fetchBooks if the query is non-empty
+        //fetchBooks(); // EDIT: Added check for non-empty query
+      //}
+   // });
 
-    return unsubscribe; // Cleanup listener
-  }, [nav]);
+    //return unsubscribe; // Cleanup listener
+  //}, [nav]);
 
   useEffect(() => {
     // Trigger fetchBooks whenever filters change

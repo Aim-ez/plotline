@@ -29,7 +29,7 @@ import {
 import { ScrollView, ActivityIndicator, FlatList } from 'react-native';
 import { HostURL } from '../../constants/URL.js';
 import axios from 'axios';
-import { useNavigation } from '@react-navigation/native';
+import { useRouter } from 'expo-router';
 
 const {red} = Colors;
 
@@ -39,19 +39,19 @@ const ReadingList = ({navigation}) => {
     const { _id } = storedCredentials;
     const getListURL = HostURL + "/user/getReadingList"
     const removeListURL = HostURL + "/user/removeFromReadingList"
-    const nav = useNavigation();
+    const router = useRouter();
 
     const [readingList, setReadingList] = useState([]);
     const [loading, setLoading] = useState(true);
 
-    useEffect(() => {
-        const unsubscribe = nav.addListener('tabPress', () => {
-            fetchReadingList();
-        });
-    
-        return unsubscribe; // Cleanup listener
-      }, [nav]);
-
+ //   useEffect(() => {
+   //     const unsubscribe = nav.addListener('tabPress', () => {
+     //       fetchReadingList();
+       // });
+    //
+      //  return unsubscribe; // Cleanup listener
+    //  }, [nav]);
+//
 
     //Fetch reading list
     useEffect(() => {

@@ -1,19 +1,11 @@
 import React from 'react'
-import { createBottomTabNavigator } from '@react-navigation/bottom-tabs'
+import { Tabs } from 'expo-router'
 import { Colors } from '@/components/styles.jsx'
 import { Ionicons } from '@expo/vector-icons'
 
-// import Tab screens
-import HomeScreen from './home.jsx'
-import ProfileScreen from './profile.jsx'
-import ReadingListScreen from './reading-list.jsx'
-import SearchScreen from './search.jsx'
-
-const Tab = createBottomTabNavigator();
-
 const TabLayout = () => {
   return (
-    <Tab.Navigator
+    <Tabs
       screenOptions={({route}) => ({
         tabBarStyle: {
           backgroundColor: Colors?.primary,
@@ -27,29 +19,29 @@ const TabLayout = () => {
         },
         tabBarInactiveTintColor: Colors?.tertiary + "cc",
         tabBarActiveTintColor: Colors?.brand,
+        headerShown: false,
+        tabBarHideOnKeyboard: true,
         tabBarIcon: ({size, color}) => {
           let iconName;
-          if (route.name === 'Home') {
+          if (route.name === 'home') {
             iconName = 'home'
-          } else if (route.name === 'Search') {
+          } else if (route.name === 'search') {
             iconName = 'search'
-          } else if (route.name === 'Reading List') {
+          } else if (route.name === 'reading-list') {
             iconName = 'list'
-          } else if (route.name === 'Profile') {
+          } else if (route.name === 'profile') {
             iconName = 'person'
           }
           return <Ionicons name={iconName} size={size} color={color}/>
 
         },
-        headerShown: false,
-        tabBarHideOnKeyboard: true,
       })}
     >
-      <Tab.Screen name="Home" component={HomeScreen}/>
-      <Tab.Screen name="Search" component={SearchScreen}/>
-      <Tab.Screen name="Reading List" component={ReadingListScreen}/>
-      <Tab.Screen name="Profile" component={ProfileScreen}/>
-    </Tab.Navigator>
+      <Tabs.Screen name="home" options={{title: 'Home'}}/>
+      <Tabs.Screen name="search" options={{title: 'Search'}}/>
+      <Tabs.Screen name="reading-list" options={{title: 'Reading List'}}/>
+      <Tabs.Screen name="profile" options={{title: 'Profile'}}/>
+    </Tabs>
   )
 }
 

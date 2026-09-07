@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import * as SplashScreen from 'expo-splash-screen';
 
-import RootStack from '../navigators/RootStack';
+import { Redirect } from 'expo-router';
 import { CredentialsContext } from '../components/CredentialsContext';
 
 
@@ -45,7 +45,7 @@ export default function App() {
 
   return (
     <CredentialsContext.Provider value={{ storedCredentials, setStoredCredentials }}>
-      <RootStack />
+      <Redirect href="/welcome" />
     </CredentialsContext.Provider>
   );
 }

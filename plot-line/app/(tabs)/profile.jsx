@@ -3,7 +3,7 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import { ScrollView, RefreshControl } from 'react-native';
 import { HostURL } from '@/constants/URL.js';
 import axios from 'axios';
-import { useNavigation } from '@react-navigation/native';
+import { useRouter } from 'expo-router';
 import { Ionicons } from '@expo/vector-icons';
 
 import { CredentialsContext } from '../../components/CredentialsContext.jsx';
@@ -50,7 +50,7 @@ const Profile = ({ navigation }) => {
     const removeCurrentURL = HostURL + "/user/removeCurrentlyReading";
 
 
-    const nav = useNavigation();
+    const router = useRouter();
 
     const [favorite, setFavorite] = useState(false);
     const [aboutMe, setAboutMe] = useState('');
@@ -66,17 +66,16 @@ const Profile = ({ navigation }) => {
         await fetchCurrentlyReadingList();
         setIsRefreshing(false);
       }, []);
-
-    useEffect(() => {
-        const unsubscribe = nav.addListener('tabPress', () => {
-            fetchFavorite();
-            fetchAboutMe();
-            fetchCurrentlyReadingList();
-        });
-    
-        return unsubscribe; // Cleanup listener
-      }, [nav]);
-
+      
+// useEffect(() => {
+//     const unsubscribe = nav.addListener('tabPress', () => {
+//         fetchFavorite();
+//         fetchAboutMe();
+//         fetchCurrentlyReadingList();
+//     });
+//
+//     return unsubscribe;
+// }, [nav]);
     useEffect(() => {
         fetchFavorite();
         fetchAboutMe();
