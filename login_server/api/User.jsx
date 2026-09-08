@@ -183,7 +183,7 @@ router.post('/signup', (req, res) => {
             status: "FAILED",
             message: "Invalid email entered"
         })
-    } else if (!/^(?!.*[ _-]{2})(?!.*[ _-]$)[A-Za-z0-9_-]{3,20}$/.test(this.username)) {
+    } else if (!/^(?!.*[ _-]{2})(?!.*[ _-]$)[A-Za-z0-9_-]{3,20}$/.test(username)) {
         //This ensures username is 3-20 chars, can contain
         //letters a-zA-Z, numbers, underscores, and hyphens.
         //Cannot start/end with an underscore or hyphen and no spaces.
