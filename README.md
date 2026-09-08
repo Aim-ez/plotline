@@ -1,5 +1,28 @@
 # plot-line
 
+### Version 2.1.0 - Release Date: September 7th, 2026
+Current released version is 2.1.0, which includes the following updates:
+
+#### Migrated to Expo SDK 57
+
+Plotline has been successfully migrated from Expo SDK 51 to Expo SDK 57, bringing the project onto a more current Expo/React Native foundation.
+
+#### Migrated to Expo Router
+
+The application's navigation architecture has been migrated from React Navigation to Expo Router.
+
+This includes:
+
+- Migrating screens into Expo Router's file-based `app/` structure
+- Updating navigation calls to use Expo Router
+- Removing the previous React Navigation root stack
+- Updating routes and screen names to match the new file-based navigation structure
+- Removing the application's dependency on the previous custom `RootStack` navigation architecture
+
+The goal of this migration was to modernize the frontend architecture while preserving the existing application's functionality.
+
+---
+
 ### Version 2.0.0 - Release Date: December 6th, 2024
 Current released version is 2.0.0, which includes the following updates:
 
