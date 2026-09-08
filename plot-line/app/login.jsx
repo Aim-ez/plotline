@@ -4,11 +4,11 @@ import { ScrollView } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
 import { Formik } from 'formik';
 import axios from 'axios';
-
-import { CredentialsContext } from '../../components/CredentialsContext';
-import KeyboardAvoidingWrapper from '../../components/KeyboardAvoidingWrapper';
-import { HostURL } from '../../constants/URL';
-import TextInput from '../../components/TextInput'; // Reusable TextInput Component
+import { router } from 'expo-router';
+import { CredentialsContext } from '../components/CredentialsContext';
+import KeyboardAvoidingWrapper from '../components/KeyboardAvoidingWrapper';
+import { HostURL } from '../constants/URL';
+import TextInput from '../components/TextInput'; // Reusable TextInput Component
 
 import {
   StyledContainer,
@@ -26,11 +26,11 @@ import {
   ExtraText,
   TextLink,
   TextLinkContent
-} from '../../components/styles';
+} from '../components/styles';
 
 const { darkLight, primary } = Colors;
 
-const Login = ({ navigation }) => {
+const Login = () => {
   const url = HostURL + "/user/login";
 
   const [hidePassword, setHidePassword] = useState(true);
@@ -93,7 +93,7 @@ const Login = ({ navigation }) => {
       <StyledContainer>
         <ScrollView>
           <InnerContainer>
-            <PageLogo source={require('../../assets/images/PlotLogo.png')} />
+            <PageLogo source={require('../assets/images/PlotLogo.png')} />
             <PageTitle testID="Header">Login</PageTitle>
             <SubTitle>Login to Your Account</SubTitle>
             <Formik
@@ -149,7 +149,7 @@ const Login = ({ navigation }) => {
                   <Line />
                   <ExtraView>
                     <ExtraText>Don't have an account already?</ExtraText>
-                    <TextLink onPress={() => navigation.navigate('Signup')}>
+                    <TextLink onPress={() => router.push('/signup')}>
                       <TextLinkContent>Signup</TextLinkContent>
                     </TextLink>
                   </ExtraView>

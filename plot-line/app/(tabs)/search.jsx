@@ -25,7 +25,7 @@ import {
   FilterText,
 } from '../../components/styles';
 
-const Search = ({ navigation }) => {
+const Search = () => {
   const [query, setQuery] = useState('');
   const [selectedGenre, setSelectedGenre] = useState('');
   const [selectedLanguage, setSelectedLanguage] = useState('');
@@ -74,7 +74,13 @@ const router = useRouter();
   } // Trigger fetchBooks when search is submitted
 
   const renderBookItem = ({ item }) => (
-    <ReviewBox onPress={() => navigation.navigate('BookDetails', { book: item, fromReview: false })}>
+    <ReviewBox onPress={() => router.push({
+        pathname: '/book-details',
+        params: {
+            book: JSON.stringify(item),
+            fromReview: 'false',
+        },
+    })}>
       <BookText>{item.volumeInfo.title}</BookText>
       <AuthorText>{item.volumeInfo.authors?.join(', ')}</AuthorText>
     </ReviewBox>
@@ -119,7 +125,7 @@ const router = useRouter();
             style={styles.results}
           />
           {hasSearched && (
-            <StyledButton onPress={() => navigation.navigate('addManualBook')}>
+            <StyledButton onPress={() => router.push('/add-manual-book')}>
               <ButtonText>Can't Find What You're Looking For?</ButtonText>
             </StyledButton>
           )}

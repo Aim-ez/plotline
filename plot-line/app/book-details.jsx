@@ -2,12 +2,11 @@ import React, { useContext, useState, useEffect } from 'react';
 import { ScrollView, Modal } from 'react-native';
 import axios from 'axios';
 import { Picker } from '@react-native-picker/picker';
-
-import { createPlotlineBook } from '../../hooks/userReviewLogic.js';
-import { CredentialsContext } from '../../components/CredentialsContext';
-import { HostURL } from '../../constants/URL.js';
-import StatusDropdown from '../../components/StatusDropdown.jsx';
-
+import { createPlotlineBook } from '../hooks/userReviewLogic.js';
+import { CredentialsContext } from '../components/CredentialsContext';
+import { HostURL } from '../constants/URL.js';
+import StatusDropdown from '../components/StatusDropdown.jsx';
+import { router, useLocalSearchParams } from 'expo-router';
 import {
   StyledContainer,
   InnerContainer,
@@ -25,11 +24,13 @@ import {
   ModalInnerContainer,
   StyledPicker,
   FlexRowContainer,
-} from '../../components/styles';
+} from '../components/styles';
 import { Ionicons } from '@expo/vector-icons';
 
-const BookDetails = ({ route, navigation }) => {
-  const { book, fromReview } = route.params;
+const BookDetails = () => {
+  const { book: bookParam, fromReview: fromReviewParam } = useLocalSearchParams();
+  const book = JSON.parse(bookParam);
+  const fromReview = fromReviewParam === 'true';
   const { storedCredentials } = useContext(CredentialsContext);
   const {_id} = storedCredentials;
   const addListURL = HostURL + "/user/addToReadingList";
@@ -62,9 +63,13 @@ const BookDetails = ({ route, navigation }) => {
     fetchFavorite();
   }, [book._id, _id]);
   
-
   const navigateToReview = (screen, book) => {
-    navigation.navigate(screen, { book });
+    router.push({
+      pathname: `/${screen}`,
+      params: {
+        book: JSON.stringify(book),
+      },
+    });
   };
 
   const addBookToCurrentlyReading = async () => {
@@ -101,7 +106,7 @@ const BookDetails = ({ route, navigation }) => {
     return imageUri ? (
       <BookCoverImage source={{ uri: imageUri }} />
     ) : (
-      <HeaderImage source={require('../../assets/images/books2.png')} />
+      <HeaderImage source={require('../assets/images/books2.png')} />
     );
   };
 
@@ -206,8 +211,8 @@ const BookDetails = ({ route, navigation }) => {
         <InnerContainer>
           {renderBookInfo(title, authors?.join(', '), description)}
           {renderButtons(
-            () => navigateToReview('ReviewGoogleBook', book),
-            () => navigateToReview('GoogleBookReviews', book),
+            () => navigateToReview('review-google-book', book),
+            () => navigateToReview('google-book-reviews', book),
             () => addGoogleBookToReadingList(book), //Will need to create Plotline book
             () => setModalVisible(true)
           )}
@@ -224,8 +229,8 @@ const BookDetails = ({ route, navigation }) => {
         {renderBookCover(coverLink)}
         {renderBookInfo(title, author, description)}
         {renderButtons(
-          () => navigateToReview('ReviewPlotlineBook', book),
-          () => navigateToReview('PlotlineBookReviews', book),
+          () => navigateToReview('review-plotline-book', book),
+          () => navigateToReview('plotline-book-reviews', book),
           () => addBookToReadingList(book._id),
           () => setModalVisible(true)
         )}

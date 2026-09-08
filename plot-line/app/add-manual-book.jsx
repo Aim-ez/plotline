@@ -7,7 +7,7 @@ import { Ionicons } from '@expo/vector-icons';
 import { HostURL } from '../../constants/URL.ts';
 import KeyboardAvoidingWrapper from '../../components/KeyboardAvoidingWrapper';
 import ReviewInput from '../../components/ReviewInput.jsx';
-
+import { router } from 'expo-router';
 import {
     StyledContainer,
     InnerContainer,
@@ -25,7 +25,7 @@ import {
 
 const { brand, darkLight } = Colors;
 
-const AddBook = ({ navigation }) => {
+const AddBook = () => {
     const [message, setMessage] = useState(null);
     const [messageType, setMessageType] = useState(null);
     const [submitting, setSubmitting] = useState(false);
@@ -53,7 +53,12 @@ const AddBook = ({ navigation }) => {
 
             if (status === 'SUCCESS') {
                 handleMessage('Book added successfully!', 'SUCCESS');
-                navigation.navigate('ReviewPlotlineBook', { book: data });
+                router.push({
+                    pathname: '/review-plotline-book',
+                    params: {
+                        book: JSON.stringify(data),
+                    },
+                });
             } else {
                 handleMessage(message, 'FAILED');
             }

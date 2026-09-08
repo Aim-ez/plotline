@@ -4,11 +4,11 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import { Ionicons } from '@expo/vector-icons';
 import { Formik } from 'formik';
 import axios from 'axios';
-
-import { CredentialsContext } from '../../components/CredentialsContext';
-import KeyboardAvoidingWrapper from '../../components/KeyboardAvoidingWrapper';
-import { HostURL } from '../../constants/URL';
-import TextInput from '../../components/TextInput';
+import { router } from 'expo-router';
+import { CredentialsContext } from '../components/CredentialsContext';
+import KeyboardAvoidingWrapper from '../components/KeyboardAvoidingWrapper';
+import { HostURL } from '../constants/URL';
+import TextInput from '../components/TextInput';
 
 import {
   StyledContainer,
@@ -26,11 +26,11 @@ import {
   ExtraText,
   TextLink,
   TextLinkContent,
-} from '../../components/styles';
+} from '../components/styles';
 
 const { primary, darkLight } = Colors;
 
-const Signup = ({ navigation }) => {
+const Signup = () => {
   const url = `${HostURL}/user/signup`;
 
   const [message, setMessage] = useState();
@@ -107,7 +107,7 @@ const Signup = ({ navigation }) => {
       <StyledContainer>
         <ScrollView>
           <InnerContainer>
-            <PageLogo source={require('../../assets/images/PlotLogo.png')} />
+            <PageLogo source={require('../assets/images/PlotLogo.png')} />
             <PageTitle>Sign Up</PageTitle>
             <SubTitle>Create Your Account</SubTitle>
 
@@ -204,7 +204,7 @@ const Signup = ({ navigation }) => {
 
                   <ExtraView>
                     <ExtraText>Already have an account? </ExtraText>
-                    <TextLink onPress={() => navigation.navigate('Login')}>
+                    <TextLink onPress={() => router.push('/login')}>
                       <TextLinkContent>Login</TextLinkContent>
                     </TextLink>
                   </ExtraView>

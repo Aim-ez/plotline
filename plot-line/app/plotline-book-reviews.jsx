@@ -1,8 +1,8 @@
 import React, { useEffect, useState} from 'react';
 import { FlatList } from 'react-native';
 import axios from 'axios';
-
-import { HostURL } from '../../constants/URL.ts'
+import { useLocalSearchParams } from 'expo-router';
+import { HostURL } from '../constants/URL.ts'
 
 import {
     StyledContainer,
@@ -12,12 +12,14 @@ import {
     ReviewBox,
     ReviewText,
     ExtraText,
-} from '../../components/styles';
-import { formatDate } from '../../hooks/formatDate.js';
+} from '../components/styles';
+import { formatDate } from '../hooks/formatDate.js';
 
 
-function PlotlineBookReviews({route}) {
-    const { book } = route.params;
+function PlotlineBookReviews() {
+    const { book: bookParam } = useLocalSearchParams();
+    const book = JSON.parse(bookParam);
+
     const bookId = book._id;
 
     const url = HostURL + "/user/getBookReviews";

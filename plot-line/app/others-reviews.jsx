@@ -1,8 +1,8 @@
 import React, {useEffect, useState} from 'react';
 import { FlatList } from 'react-native';
 import axios from 'axios';
-
-import { HostURL } from '../../constants/URL.ts'
+import { router, useLocalSearchParams } from 'expo-router';
+import { HostURL } from '../constants/URL.ts'
 
 import {
     StyledContainer,
@@ -14,11 +14,11 @@ import {
     ExtraText,
     StyledButton,
     ButtonText
-} from '../../components/styles';
-import { formatDate } from '../../hooks/formatDate.js';
+} from '../components/styles';
+import { formatDate } from '../hooks/formatDate.js';
 
-function OthersReviews({route, navigation}) {
-    const { userId, handle } = route.params;
+function OthersReviews() {
+    const { userId, handle } = useLocalSearchParams();
 
     const url = HostURL + "/user/getReviews";
     const bookurl = HostURL + "/user/getBookData";
@@ -61,7 +61,13 @@ function OthersReviews({route, navigation}) {
         }
 
         const handlePress = () => {
-            navigation.navigate('BookDetails', { book: bookData, fromReview: true})
+            router.push({
+                pathname: '/book-details',
+                params: {
+                    book: JSON.stringify(bookData),
+                    fromReview: 'true',
+                },
+            });
         }
 
         return (
@@ -78,7 +84,13 @@ function OthersReviews({route, navigation}) {
     const numberOfReviews = allReviewData.length;
 
     const goToProfile = () => {
-        navigation.navigate('OthersProfile', {userId: userId, username: handle})
+        router.push({
+            pathname: '/others-profile',
+            params: {
+                userId,
+                username: handle,
+            },
+        });
     }
 
 

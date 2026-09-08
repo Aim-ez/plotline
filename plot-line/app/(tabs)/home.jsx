@@ -4,7 +4,7 @@ import axios from 'axios';
 import { CredentialsContext } from '../../components/CredentialsContext';
 import { HostURL } from '../../constants/URL.ts';
 import { Ionicons } from '@expo/vector-icons';
-
+import { useRouter } from 'expo-router';
 import { 
     StyledContainer,
     HomeScreenContainer, 
@@ -24,9 +24,9 @@ import {
     HeaderImage
 } from '../../components/styles';
 
-const Home = ({ navigation }) => {
+const Home = () => {
     const url = `${HostURL}/user/getUserIDByUsername`;
-
+    const router = useRouter();
     const [query, setQuery] = useState('');
     const [message, setMessage] = useState(null);
     const [messageType, setMessageType] = useState(null);
@@ -102,7 +102,13 @@ const Home = ({ navigation }) => {
             fetchRecommendations(userId);
 
             // Navigate to the user reviews page with the fetched user ID and handle
-            navigation.navigate('OthersReviews', { userId, handle: query });
+            router.push({
+                pathname: '/others-reviews',
+                params: {
+                    userId,
+                    username: query,
+                },
+            });
         } catch (error) {
             handleMessage(error);
         }

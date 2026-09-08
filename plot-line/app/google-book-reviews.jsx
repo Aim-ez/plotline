@@ -1,13 +1,13 @@
 import {useEffect, useState} from 'react';
 import axios from 'axios';
+import { router, useLocalSearchParams } from 'expo-router';
+import { HostURL } from '../constants/URL.ts'
 
-import { HostURL } from '../../constants/URL.ts'
-
-import { renderReviewMessage } from '../../components/ReviewMessage.jsx';
+import { renderReviewMessage } from '../components/ReviewMessage.jsx';
 
 
-const GoogleBookReviews = ({route, navigation}) => {
-    const { book } = route.params;
+const GoogleBookReviews = () => {
+    const { book } = useLocalSearchParams();
 
     const existsurl = HostURL + "/user/bookExists";
     const getbookurl = HostURL + "/user/getBookData";
@@ -39,7 +39,12 @@ const GoogleBookReviews = ({route, navigation}) => {
                 const bookId = response.data.data.bookId
                 const res = await axios.get(getbookurl, {params: {bookId: bookId}})
                 const plotBookInfo = res.data.data;
-                navigation.replace('PlotlineBookReviews', {book: plotBookInfo})
+                router.replace({
+                    pathname: '/plotline-book-reviews',
+                    params: {
+                        book: JSON.stringify(plotBookInfo),
+                    },
+                });
             } else {
                 console.error('Error checking if plot book exists', response.data);
                 setError("An error occured. Check your network and try again.");

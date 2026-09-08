@@ -1,6 +1,6 @@
 import React from 'react';
 import { ScrollView } from 'react-native';
-
+import { router } from 'expo-router';
 import {
     StyledContainer,
     InnerContainer,
@@ -13,9 +13,9 @@ import {
     ScreenImage,
 } from '../components/styles';
 
-const Welcome = ({navigation}) => {
+const Welcome = () => {
     const handlePress = () => {
-        navigation.navigate('Login');
+        router.push('/login');
     }
 
     return (

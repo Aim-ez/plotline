@@ -4,79 +4,81 @@ import { ScrollView } from 'react-native';
 import { Formik } from 'formik';
 import axios from 'axios';
 
-import { CredentialsContext } from '../../components/CredentialsContext.jsx'
-import { HostURL } from '../../constants/URL.ts';
-import KeyboardAvoidingWrapper from '../../components/KeyboardAvoidingWrapper';
-import { checkReviewExists } from '../../hooks/userReviewLogic.js';
-import ReviewInput from '../../components/TextInput'; // Reusable TextInput Component
-
+import { CredentialsContext } from '../components/CredentialsContext.jsx'
+import { HostURL } from '../constants/URL.ts';
+import KeyboardAvoidingWrapper from '../components/KeyboardAvoidingWrapper';
+import { checkReviewExists, createPlotlineBook } from '../hooks/userReviewLogic.js';
+import ReviewInput from '../components/TextInput'; // Reusable TextInput Component
+import { router, useLocalSearchParams } from 'expo-router';
 import {
     StyledContainer,
     InnerContainer,
     PageTitle,
+    PageLogo,
     MsgBox,
     SubTitle,
     StyledFormArea,
     StyledButton,
     ButtonText,
     Line,
-    PageLogo,
     Colors,
-} from '../../components/styles';
+} from '../components/styles';
 
-const {darkLight} = Colors;
+const { darkLight } = Colors;
 
-const ReviewPlotlineBook = ({navigation, route}) => {
+const ReviewGoogleBook = () => {
     const reviewurl = HostURL + "/user/createReview"
-    const { book } = route.params;
+    const { book } = useLocalSearchParams();
 
     const currentDate = new Date().toISOString();
 
-
-    //context -> will be important later
     const { storedCredentials } = useContext(CredentialsContext);
     const { _id } = storedCredentials;
-    const title = book?.title || "No Title Available";  // Default title if missing
-
-
+    const title = book?.volumeInfo.title || "No Title Available";  // Default title if missing
 
     const [message, setMessage] = useState();
     const [messageType, setMessageType] = useState();
     const [submitting, setSubmitting] = useState();
-
    
 
     const handleCreateReview = async (reviewInfo) => {
         handleMessage(null); // Reset error message
         const {rating, description } = reviewInfo;
 
+        // get plotline bookId to put review on
+        const bookId = await createPlotlineBook(book)
+
         const formData = {
             rating,
             description,
             date: currentDate,
             userId: _id,
-            bookId: book._id
+            bookId: bookId 
         }
 
         try {     
-            // check if user has already reviewed this book
-            const reviewExists = await checkReviewExists(_id, book._id);
+            if (bookId == 1) { //Book ID's will look like 6ec95j...
+                console.error('Something broke in book creation', response.data);
+            } else {   
+                // check if user has already reviewed this book
+                const reviewExists = await checkReviewExists(_id, bookId);
 
-            if (reviewExists == true) {
-                handleMessage("You have already reviewed this book!", 'FAILED');
-                setSubmitting(false);
-            } else if (reviewExists == false) {
-                const response = await axios.post(reviewurl, formData)
-                const result = response.data;
-                const {message, status} = result;
-
-                if (status != 'SUCCESS') {
-                    handleMessage(message, status);
+                if (reviewExists == true) {
+                    handleMessage("You have already reviewed this book!", 'FAILED');
                     setSubmitting(false);
-                } else { 
-                    handleMessage("Review created succesfully!", 'SUCCESS')
-                    navigation.navigate('TabLayout')
-                    console.log("REVIEW CREATION SUCCESSFUL")
+                } else if (reviewExists == false) {
+                    const response = await axios.post(reviewurl, formData)
+                    const result = response.data;
+                    const {message, status} = result;
+
+                    if (status != 'SUCCESS') {
+                        handleMessage(message, status);
+                        setSubmitting(false);
+                    } else { 
+                        handleMessage("Review created.", 'SUCCESS')
+                        console.log("REVIEW CREATION SUCCESSFUL")
+                        router.replace('/home')
+                    }
                 }
             }
         } catch (error) {
@@ -97,7 +99,7 @@ const ReviewPlotlineBook = ({navigation, route}) => {
             <StyledContainer>
                 <ScrollView>
                     <InnerContainer>
-                        <PageLogo source={require('../../assets/images/PlotLogo.png')}/>
+                        <PageLogo source={require('../assets/images/PlotLogo.png')}/>
                         <PageTitle>Reviewing:</PageTitle>
                         <SubTitle>{title}</SubTitle>
                         <Formik
@@ -117,7 +119,8 @@ const ReviewPlotlineBook = ({navigation, route}) => {
                                     handleCreateReview(values);
                                 }
                             }}
-                        >{({handleChange, handleBlur, handleSubmit, values}) => (<StyledFormArea>
+                        >{({handleChange, handleBlur, handleSubmit, values}) => (
+                        <StyledFormArea>
                             <ReviewInput 
                                 label="Rating (out of 5)"
                                 icon="star"
@@ -129,7 +132,7 @@ const ReviewPlotlineBook = ({navigation, route}) => {
                                 returnKeyType="done"
                                 onSubmitEditing={handleSubmit} // Submit the form
                             />
-                            <ReviewInput
+                            <ReviewInput 
                                 label="Review"
                                 icon="book"
                                 placeholder="Enter review message here...(optional)"
@@ -159,5 +162,5 @@ const ReviewPlotlineBook = ({navigation, route}) => {
     );
 }
 
-export default ReviewPlotlineBook;
+export default ReviewGoogleBook;
 

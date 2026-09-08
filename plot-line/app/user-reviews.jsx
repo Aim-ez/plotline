@@ -1,9 +1,9 @@
 import React, { useContext, useEffect, useState, useCallback } from 'react';
 import { FlatList } from 'react-native';
 import axios from 'axios';
-
-import { CredentialsContext } from '../../components/CredentialsContext';
-import { HostURL } from '../../constants/URL';
+import { router } from 'expo-router';
+import { CredentialsContext } from '../components/CredentialsContext';
+import { HostURL } from '../constants/URL';
 
 import {
     StyledContainer,
@@ -13,10 +13,10 @@ import {
     ReviewBox,
     ReviewText,
     ExtraText,
-} from '../../components/styles';
-import { formatDate } from '../../hooks/formatDate';
+} from '../components/styles';
+import { formatDate } from '../hooks/formatDate';
 
-const UserReviews = ({ navigation }) => {
+const UserReviews = () => {
     const reviewsUrl = `${HostURL}/user/getReviews`;
     const bookDataUrl = `${HostURL}/user/getBookData`;
 
@@ -63,7 +63,13 @@ const UserReviews = ({ navigation }) => {
         if (!bookData) return <ReviewText>Loading book details...</ReviewText>;
 
         const handlePress = () => {
-            navigation.navigate('BookDetails', { book: bookData, fromReview: true });
+            router.push({
+                pathname: '/book-details',
+                params: {
+                    book: JSON.stringify(bookData),
+                    fromReview: 'true',
+                },
+            });
         };
 
         return (

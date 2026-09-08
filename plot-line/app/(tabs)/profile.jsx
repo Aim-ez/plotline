@@ -31,7 +31,7 @@ const {red, tertiary} = Colors;
 
 import { View } from 'react-native';
 
-const Profile = ({ navigation }) => {
+const Profile = () => {
     const { storedCredentials, setStoredCredentials } = useContext(CredentialsContext);
 
     // Provide fallback values if `storedCredentials` is null
@@ -198,14 +198,20 @@ const Profile = ({ navigation }) => {
     };
 
     const goToDetails = (book) => {
-        navigation.navigate('BookDetails', { book: book, fromReview: true})
+        router.push({
+            pathname: '/book-details',
+            params: {
+                book: JSON.stringify(book),
+                fromReview: 'true',
+            },
+        })
     }
 
     // Render sections to keep JSX clean
     const renderReviews = () => (
         <InnerContainer>
             <SubTitle>Your Reviews</SubTitle>
-            <StyledButton onPress ={() => navigation.navigate('UserReviews')}>
+            <StyledButton onPress ={() => router.push('/user-reviews')}>
                 <ButtonText>View Your Reviews</ButtonText>
             </StyledButton>
         </InnerContainer>

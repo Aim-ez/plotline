@@ -33,7 +33,7 @@ import { useRouter } from 'expo-router';
 
 const {red} = Colors;
 
-const ReadingList = ({navigation}) => {
+const ReadingList = () => {
     //context -> will be important later
     const { storedCredentials } = useContext(CredentialsContext);
     const { _id } = storedCredentials;
@@ -83,7 +83,13 @@ const ReadingList = ({navigation}) => {
     )
 
     const goToDetails = (book) => {
-        navigation.navigate('BookDetails', { book: book, fromReview: true})
+        router.push({
+            pathname: '/book-details',
+            params: {
+                book: JSON.stringify(book),
+                fromReview: 'true',
+            },
+        });
     }
 
     const removeBook = async(book) => {

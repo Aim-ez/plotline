@@ -3,9 +3,9 @@ import { StatusBar } from 'expo-status-bar';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { ScrollView } from 'react-native';
 import axios from 'axios';
-import { HostURL } from '../../constants/URL.js';
-
-import { CredentialsContext } from '../../components/CredentialsContext.jsx';
+import { HostURL } from '../constants/URL.js';
+import { router, useLocalSearchParams } from 'expo-router';
+import { CredentialsContext } from '../components/CredentialsContext.jsx';
 
 import {
     StyledContainer,
@@ -21,10 +21,10 @@ import {
     BookInfo,
     BookText,
     AuthorText
-} from '../../components/styles';
+} from '../components/styles';
 
-const Profile = ({ route, navigation }) => {
-    const {userId, username} = route.params;
+const Profile = () => {
+    const {userId, username} = useLocalSearchParams();
     const [favorite, setFavorite] = useState(false);
     const getFavURL = HostURL + "/user/getFavourite";
     const getBookURL = HostURL + "/user/getBook";
@@ -103,7 +103,13 @@ const Profile = ({ route, navigation }) => {
     };
 
     const goToDetails = (book) => {
-        navigation.navigate('BookDetails', { book: book, fromReview: true})
+        router.push({
+            pathname: '/book-details',
+            params: {
+                book: JSON.stringify(book),
+                fromReview: 'true',
+            },
+        });
     }
 
     // Render sections to keep JSX clean
