@@ -2,7 +2,7 @@ import React, { useState, useEffect, useContext  } from 'react';
 import { FlatList, Text, ActivityIndicator, TouchableOpacity, View } from 'react-native';
 import axios from 'axios';
 import { CredentialsContext } from '../../components/CredentialsContext';
-import { HostURL } from '../../constants/URL.ts';
+import { HostURL } from '../../constants/URL.js';
 import { Ionicons } from '@expo/vector-icons';
 import { useRouter } from 'expo-router';
 import { 

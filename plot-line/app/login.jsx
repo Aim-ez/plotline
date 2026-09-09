@@ -7,7 +7,7 @@ import axios from 'axios';
 import { router } from 'expo-router';
 import { CredentialsContext } from '../components/CredentialsContext';
 import KeyboardAvoidingWrapper from '../components/KeyboardAvoidingWrapper';
-import { HostURL } from '../constants/URL';
+import { HostURL } from '../constants/URL.js';
 import TextInput from '../components/TextInput'; // Reusable TextInput Component
 
 import {

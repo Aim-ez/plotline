@@ -5,7 +5,7 @@ import { Formik } from 'formik';
 import axios from 'axios';
 
 import { CredentialsContext } from '../components/CredentialsContext.jsx'
-import { HostURL } from '../constants/URL.ts';
+import { HostURL } from '../constants/URL.js';
 import KeyboardAvoidingWrapper from '../components/KeyboardAvoidingWrapper';
 import { checkReviewExists } from '../hooks/userReviewLogic.js';
 import ReviewInput from '../components/TextInput'; // Reusable TextInput Component

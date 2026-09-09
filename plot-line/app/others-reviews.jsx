@@ -2,7 +2,7 @@ import React, {useEffect, useState} from 'react';
 import { FlatList } from 'react-native';
 import axios from 'axios';
 import { router, useLocalSearchParams } from 'expo-router';
-import { HostURL } from '../constants/URL.ts'
+import { HostURL } from '../constants/URL.js'
 
 import {
     StyledContainer,

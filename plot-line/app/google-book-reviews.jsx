@@ -1,7 +1,7 @@
 import {useEffect, useState} from 'react';
 import axios from 'axios';
 import { router, useLocalSearchParams } from 'expo-router';
-import { HostURL } from '../constants/URL.ts'
+import { HostURL } from '../constants/URL.js'
 
 import { renderReviewMessage } from '../components/ReviewMessage.jsx';
 

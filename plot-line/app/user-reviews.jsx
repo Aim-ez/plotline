@@ -3,7 +3,7 @@ import { FlatList } from 'react-native';
 import axios from 'axios';
 import { router } from 'expo-router';
 import { CredentialsContext } from '../components/CredentialsContext';
-import { HostURL } from '../constants/URL';
+import { HostURL } from '../constants/URL.js';
 
 import {
     StyledContainer,
