@@ -33,7 +33,7 @@ const ReviewGoogleBook = () => {
     const currentDate = new Date().toISOString();
 
     const { storedCredentials } = useContext(CredentialsContext);
-    const { _id } = storedCredentials;
+    const { _id } = storedCredentials || {};
     const title = book?.volumeInfo.title || "No Title Available";  // Default title if missing
 
     const [message, setMessage] = useState();

@@ -45,7 +45,7 @@ export default function App() {
 
   return (
     <CredentialsContext.Provider value={{ storedCredentials, setStoredCredentials }}>
-      <Redirect href="/welcome" />
+      <Redirect href={storedCredentials ? "/(tabs)/home" : "/welcome"} />
     </CredentialsContext.Provider>
   );
 }

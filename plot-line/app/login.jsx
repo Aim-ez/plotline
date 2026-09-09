@@ -46,17 +46,22 @@ const Login = () => {
     setMessageType(type);
   };
 
-  const persistLogin = (credentials, message, status) => {
-    AsyncStorage.setItem('plotlineCredentials', JSON.stringify(credentials))
-      .then(() => {
-        handleMessage(message, status);
-        setStoredCredentials(credentials);
-      })
-      .catch((error) => {
-        console.error(error);
-        handleMessage('Persisting login failed');
-      });
-  };
+const persistLogin = async (credentials, message, status) => {
+  try {
+    await AsyncStorage.setItem(
+      'plotlineCredentials',
+      JSON.stringify(credentials)
+    );
+
+    setStoredCredentials(credentials);
+    handleMessage(message, status);
+
+    router.replace('/(tabs)/home');
+  } catch (error) {
+    console.error(error);
+    handleMessage('Persisting login failed');
+  }
+};
 
   const handleLogin = (credentials) => {
     handleMessage(null); // Reset error message
@@ -73,11 +78,12 @@ const Login = () => {
         const result = response.data;
         const { message, status, data } = result;
 
+
         if (status !== 'SUCCESS') {
           handleMessage(message, status);
         } else {
           console.log('LOGIN SUCCESSFUL');
-          persistLogin(data[0], message, status); // IF DOING GOOGLE SIGN IN, REWATCH KEEPING USER LOGGED IN
+          persistLogin(data[0], message, status);
         }
         setSubmitting(false);
       })

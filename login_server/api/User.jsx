@@ -565,7 +565,7 @@ router.get('/getUserIdByUsername', async (req, res) => {
 
 router.get('/getReadingList', async (req, res) => {
     let { userId } = req.query;
-    userId = userId.trim();
+    userId = userId?.trim();
 
     if (!userId) {
         return res.status(400).json({

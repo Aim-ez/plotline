@@ -35,7 +35,7 @@ const ReviewPlotlineBook = () => {
 
     //context -> will be important later
     const { storedCredentials } = useContext(CredentialsContext);
-    const { _id } = storedCredentials;
+    const { _id } = storedCredentials || {};
     const title = book?.title || "No Title Available";  // Default title if missing
 
 

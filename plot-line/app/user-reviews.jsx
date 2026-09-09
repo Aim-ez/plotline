@@ -25,7 +25,7 @@ const UserReviews = () => {
 
     // Context data
     const { storedCredentials } = useContext(CredentialsContext);
-    const { _id } = storedCredentials;
+    const { _id } = storedCredentials || {};
 
     // Fetch all reviews
     const fetchReviews = useCallback(async () => {

@@ -1,6 +1,16 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Stack } from 'expo-router';
+import { CredentialsContext } from '../components/CredentialsContext';
 
 export default function RootLayout() {
-  return <Stack screenOptions={{ headerShown: false }} />;
+  const [storedCredentials, setStoredCredentials] = useState({});
+  
+  return (
+    <CredentialsContext.Provider 
+      value={{ storedCredentials, setStoredCredentials }}
+    >
+      <Stack screenOptions={{ headerShown: false}}/>
+    </CredentialsContext.Provider>
+
+  )
 }

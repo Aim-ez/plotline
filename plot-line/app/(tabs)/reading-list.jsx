@@ -36,7 +36,7 @@ const {red} = Colors;
 const ReadingList = () => {
     //context -> will be important later
     const { storedCredentials } = useContext(CredentialsContext);
-    const { _id } = storedCredentials;
+    const { _id } = storedCredentials || {};
     const getListURL = HostURL + "/user/getReadingList"
     const removeListURL = HostURL + "/user/removeFromReadingList"
     const router = useRouter();
@@ -55,7 +55,9 @@ const ReadingList = () => {
 
     //Fetch reading list
     useEffect(() => {
-        fetchReadingList();
+        if (_id) {
+            fetchReadingList();
+        }
     }, [_id]);
 
     const fetchReadingList = async() => {

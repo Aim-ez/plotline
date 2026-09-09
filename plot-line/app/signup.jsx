@@ -82,6 +82,7 @@ const Signup = () => {
       setStoredCredentials(credentials);
       handleMessage(message, 'SUCCESS');
       setSubmitting(false);
+      router.replace('/(tabs)/home');
     } catch (error) {
       console.error('Error persisting login:', error);
       handleMessage('Login persistence failed.');

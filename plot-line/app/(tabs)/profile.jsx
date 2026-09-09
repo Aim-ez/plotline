@@ -38,7 +38,10 @@ const Profile = () => {
     const name = storedCredentials?.name || 'NAME SHOULD BE HERE';
     const username = storedCredentials?.username || 'USER NAME HERE';
     const email = storedCredentials?.email || 'EMAIL HERE';
-    const {_id} = storedCredentials || '00000';
+    const {_id} = storedCredentials || {};
+console.log('PROFILE CREDENTIALS:', storedCredentials);
+console.log('PROFILE USER ID:', _id);
+
     const getFavURL = HostURL + "/user/getFavourite";
     const getBookURL = HostURL + "/user/getBook";
     const clearFavURL = HostURL + "/user/clearFavourite";
@@ -77,10 +80,12 @@ const Profile = () => {
 //     return unsubscribe;
 // }, [nav]);
     useEffect(() => {
-        fetchFavorite();
-        fetchAboutMe();
-        fetchPrivacyStatus();
-        fetchCurrentlyReadingList();
+        if (_id) {
+            fetchFavorite();
+            fetchAboutMe();
+            fetchPrivacyStatus();
+            fetchCurrentlyReadingList();
+        }
     }, [_id]);
 
     const fetchFavorite = async () => {
@@ -168,6 +173,7 @@ const Profile = () => {
         try {
             await AsyncStorage.removeItem('plotlineCredentials');
             setStoredCredentials(null);
+            router.replace('/welcome');
         } catch (error) {
             console.error('Error clearing login credentials:', error);
         }

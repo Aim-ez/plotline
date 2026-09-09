@@ -36,7 +36,7 @@ const Home = () => {
     const [reviewCount, setReviewCount] = useState(0);
 
     const { storedCredentials } = useContext(CredentialsContext);
-    const { _id } = storedCredentials;
+    const { _id } = storedCredentials || {};
 
     const reviewsUrl = `${HostURL}/user/getReviews`;
     const recommendationsUrl = `${HostURL}/user/recommendations`;
