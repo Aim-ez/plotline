@@ -2,10 +2,6 @@ const express = require('express');
 const router = express.Router();
 const axios = require('axios');
 
-const GOOGLE_BOOKS_API_KEY = 'AIzaSyA4Z1Qm7N2_6AnPLHOtS577y4-nV_NrAb8';
-const GOOGLE_BOOKS_API = 'https://www.googleapis.com/books/v1/volumes';
-
-
 // mongoDB models
 const User = require('./../models/User.jsx');
 const ReadingList = require('./../models/ReadingList.jsx');
