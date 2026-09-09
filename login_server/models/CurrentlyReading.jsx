@@ -4,12 +4,13 @@ const Schema = mongoose.Schema;
 const BookStatusSchema = new Schema({
     book: {
         type: Schema.Types.ObjectId,
-        ref: 'Book', // Reference the Book model
+        ref: 'Book',
         required: true,
     },
+
     status: {
         type: String,
-        enum: ['Just Started', 'Halfway', 'Nearly Done'], // Restrict to valid statuses
+        enum: ['Just Started', 'Halfway', 'Nearly Done'],
         required: true,
     },
 });
@@ -17,10 +18,14 @@ const BookStatusSchema = new Schema({
 const CurrentlyReadingSchema = new Schema({
     userId: {
         type: Schema.Types.ObjectId,
-        ref: 'User', // Reference the User model
+        ref: 'User',
         required: true,
+        unique: true,
     },
-    books: [BookStatusSchema], // Embed book and status as a subdocument
+
+    books: [BookStatusSchema],
+}, {
+    timestamps: true,
 });
 
 const CurrentlyReading = mongoose.model('CurrentlyReading', CurrentlyReadingSchema);

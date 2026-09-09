@@ -576,7 +576,7 @@ router.get('/getReadingList', async (req, res) => {
 
     try {
         //Find readinglist by userId
-        const data = await ReadingList.findOne({ userId: userId });
+        const data = await ReadingList.findOne({ userId: userId }).populate('books');
 
         if (!data) {
             return res.status(404).json({
@@ -601,52 +601,63 @@ router.get('/getReadingList', async (req, res) => {
 });
 
 router.post('/addToReadingList', async (req, res) => {
-    let { userId, book } = req.body;
-    userId = userId.trim()
+    let { userId, bookId } = req.body;
+    userId = userId?.trim();
 
-    if (!userId || !book) {
+    if (!userId || !bookId) {
         return res.status(400).json({
             status: "FAILED",
-            message: "Reading list and book are required"
-        })
+            message: "User ID and book ID are required"
+        });
     }
 
     try {
         const list = await ReadingList.findOne({ userId });
 
+        if (!list) {
+            return res.status(404).json({
+                status: "FAILED",
+                message: "Reading list not found"
+            });
+        }
+
         const isAlreadyInList = list.books.some(
-            (b) => b.isbn === book.isbn
+            (id) => id.toString() === bookId
         );
 
-
-        if (!isAlreadyInList){
-            list.books.push(book);
-            await list.save();
-            return res.status(200).json({
-                status: "SUCCESS",
-                message: "Book added to reading list successfully",
-            });
-        } else {
+        if (isAlreadyInList) {
             return res.status(200).json({
                 status: "FAILED",
-                message: "This book is already in your reading list!",
-            })
+                message: "This book is already in your reading list!"
+            });
         }
+
+        list.books.push(bookId);
+        await list.save();
+
+        return res.status(200).json({
+            status: "SUCCESS",
+            message: "Book added to reading list successfully"
+        });
+
     } catch (error) {
-        console.error("Error adding book to raeding list: ", error);
-        return res.status(500).json({ error: 'An error occured' })
+        console.error("Error adding book to reading list:", error);
+        return res.status(500).json({
+            status: "FAILED",
+            message: "An error occurred while adding book to reading list"
+        });
     }
-})
+});
 
 router.post('/removeFromReadingList', async (req, res) => {
-    let { userId, book } = req.body;
-    userId = userId.trim()
+    let { userId, bookId } = req.body;
+    userId = userId?.trim();
 
-    if (!userId || !book) {
+    if (!userId || !bookId) {
         return res.status(400).json({
             status: "FAILED",
-            message: "Reading list and book are required."
-        })
+            message: "User ID and book ID are required."
+        });
     }
 
     try {
@@ -659,24 +670,34 @@ router.post('/removeFromReadingList', async (req, res) => {
             });
         }
 
-        const bookIndex = list.books.findIndex((b) => b.isbn === book.isbn);
+        const bookIndex = list.books.findIndex(
+            (id) => id.toString() === bookId
+        );
+
         if (bookIndex === -1) {
-            return res.status(404).json({ error: "Book not found in reading list"})
+            return res.status(404).json({
+                status: "FAILED",
+                message: "Book not found in reading list."
+            });
         }
 
         list.books.splice(bookIndex, 1);
-        await list.save()
+        await list.save();
 
         return res.status(200).json({
             status: "SUCCESS",
             message: "Book removed from reading list successfully",
             list,
-        })
+        });
+
     } catch (error) {
-        console.error("Error removing book from reading list: ", error);
-        return res.status(500).json({error: 'An error occurred'});
+        console.error("Error removing book from reading list:", error);
+        return res.status(500).json({
+            status: "FAILED",
+            message: "An error occurred while removing the book"
+        });
     }
-})
+});
 
 router.post('/setFavourite', async (req, res) => {
     let {userId, bookId} = req.body;

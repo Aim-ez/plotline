@@ -95,14 +95,20 @@ const ReadingList = () => {
     const removeBook = async(book) => {
         const dataToSend = {
             userId: _id,
-            book: book,
+            bookId: book._id,
           }
 
-        const response = await axios.post(removeListURL, dataToSend)
-        if (response.data.status === "SUCCESS") {
-            fetchReadingList();
-        } else {
-            console.error("Error deleting book in reading-list.jsx")
+
+        try {
+            const response = await axios.post(removeListURL, dataToSend);
+
+            if (response.data.status === "SUCCESS") {
+                fetchReadingList();
+            } else {
+                console.error(response.data.message);
+            }
+        } catch (error) {
+            console.error("Error deleting book from reading list:", error);
         }
     }
 
@@ -132,7 +138,7 @@ const ReadingList = () => {
             ) : (
                 <FlatList
                     data={readingList}
-                    keyExtractor={(item) => item.isbn}
+                    keyExtractor={(item) => item._id}
                     renderItem={renderBook}
                 />
             )}

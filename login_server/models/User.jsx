@@ -2,20 +2,48 @@ const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 
 const UserSchema = new Schema({
-    name: String,
-    username: String,
-    email: String,
-    password: String,
-    private: { type: Boolean, default: false }, // Existing attribute
+    name: {
+        type: String,
+        required: true,
+        trim: true,
+    },
+
+    username: {
+        type: String,
+        required: true,
+        unique: true,
+        trim: true,
+        lowercase: true,
+    },
+
+    email: {
+        type: String,
+        required: true,
+        unique: true,
+        trim: true,
+        lowercase: true,
+    },
+
+    password: {
+        type: String,
+        required: true,
+    },
+
+    private: {
+        type: Boolean,
+        default: false,
+    },
+
     favourite: {
         type: Schema.Types.ObjectId,
-        ref: 'Book', // Reference to a Book model
-        default: null, // Allows null if no favourite is selected
+        ref: 'Book', //reference to Book db object
+        default: null,
     },
+
     about: {
         type: String,
-        maxlength: 500, // Limit to 500 characters
-        default: '', // Default to an empty string if not provided
+        maxlength: 500,
+        default: '', //default to empty string if not provided
     },
 });
 

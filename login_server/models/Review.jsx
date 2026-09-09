@@ -12,9 +12,21 @@ const ReviewSchema = new Schema({
         ref: 'Book',
         required:  true,
     },
-    rating: Number,
-    description: String,
-    date: Date,
+    rating: {
+        type: Number,
+        required: true,
+        min: 1,
+        max: 5,
+    },
+    description: {
+        type: String,
+        trim: true,
+        default: '',
+    },
+    date: {
+        type: Date,
+        default: Date.now,
+    },
 });
 
 const Review = mongoose.model('Review', ReviewSchema);

@@ -4,9 +4,9 @@ import { View, ScrollView, TouchableOpacity } from 'react-native';
 import DateTimePicker from '@react-native-community/datetimepicker';
 import axios from 'axios';
 import { Ionicons } from '@expo/vector-icons';
-import { HostURL } from '../../constants/URL.js';
-import KeyboardAvoidingWrapper from '../../components/KeyboardAvoidingWrapper';
-import ReviewInput from '../../components/ReviewInput.jsx';
+import { HostURL } from '../constants/URL.js';
+import KeyboardAvoidingWrapper from '../components/KeyboardAvoidingWrapper';
+import ReviewInput from '../components/ReviewInput.jsx';
 import { router } from 'expo-router';
 import {
     StyledContainer,
@@ -21,7 +21,7 @@ import {
     Line,
     LeftIcon,
     Colors,
-} from '../../components/styles';
+} from '../components/styles';
 
 const { brand, darkLight } = Colors;
 

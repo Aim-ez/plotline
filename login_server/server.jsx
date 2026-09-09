@@ -1,14 +1,11 @@
 // mongo
 require('./config/db.jsx');
-// Host URL
-const HostURL = require('../plot-line/constants/URL.js')
-
 const app = require('express')();
 const port = 3000;
 
 const cors = require('cors');
 const corsOptions = {
-    origin: [HostURL, 'https://i3o4d8s-aim-ez-8081.exp.direct'],
+    origin: true,
     methods: "GET,HEAD,PUT,PATCH,POST,DELETE",
     credentials: true,
 }

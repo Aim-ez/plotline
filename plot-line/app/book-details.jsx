@@ -131,27 +131,28 @@ const BookDetails = () => {
   }
 
   const addBookToReadingList = async (bookId) => {
-    //Reset message box
+    // Reset message box
     handleMessage(null);
 
-    //Get actual book object
-    const b = await getBook(bookId);
-
     const dataToSend = {
-      userId: _id,
-      book: b,
-    }
+        userId: _id,
+        bookId: bookId,
+    };
 
-    //Add the book object to the list
-    const res = await axios.post(addListURL, dataToSend)
-    const status = res.data.status;
+    try {
+        const res = await axios.post(addListURL, dataToSend);
+        const status = res.data.status;
 
-    if (status === "SUCCESS") {
-      handleMessage(res.data.message, status)
-    } else {
-      handleMessage(res.data.message)
+        if (status === "SUCCESS") {
+            handleMessage(res.data.message, status);
+        } else {
+            handleMessage(res.data.message);
+        }
+    } catch (error) {
+        console.error("Error adding book to reading list:", error);
+        handleMessage("An error occurred while adding the book.");
     }
-  }
+};
 
   const addFavourite = async () => {
         let bookId = null
