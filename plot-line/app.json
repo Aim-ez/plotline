@@ -32,7 +32,8 @@
           "backgroundColor": "#ffffff",
           "imageWidth": 200
         }
-      ]
+      ],
+      "expo-router"
     ]
   }
 }
